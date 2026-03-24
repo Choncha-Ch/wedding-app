@@ -15,7 +15,7 @@ const Index = () => {
           width={1024}
           height={1536}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-cream/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-cream" />
       </div>
 
       {/* Content */}
@@ -29,11 +29,11 @@ const Index = () => {
           Together with their loved ones
         </p>
 
-        <h1 className="text-5xl md:text-6xl text-foreground mb-1" style={{ fontFamily: "'Great Vibes', cursive" }}>
+        <h1 className="text-5xl md:text-6xl text-foreground mb-1" style={{ fontFamily: "'Playfair Display SC', serif", fontWeight: 700, letterSpacing: '0.06em' }}>
           Choncha
         </h1>
         <p className="font-serif text-2xl text-gold-dark mb-1">&</p>
-        <h1 className="text-5xl md:text-6xl text-foreground mb-6" style={{ fontFamily: "'Great Vibes', cursive" }}>
+        <h1 className="text-5xl md:text-6xl text-foreground mb-6" style={{ fontFamily: "'Playfair Display SC', serif", fontWeight: 700, letterSpacing: '0.06em' }}>
           Timo
         </h1>
 
