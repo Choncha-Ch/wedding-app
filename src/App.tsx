@@ -8,6 +8,7 @@ import Activities from "./pages/Activities";
 import ActivityDetail from "./pages/ActivityDetail";
 import Calendar from "./pages/Calendar";
 import Venues from "./pages/Venues";
+import VenueDetail from "./pages/VenueDetail";
 import Travel from "./pages/Travel";
 import NotFound from "./pages/NotFound";
 

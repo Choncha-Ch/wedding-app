@@ -26,15 +26,15 @@ const Index = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <p className="font-serif text-sm tracking-[0.25em] text-muted-foreground italic mb-4">
-          Together with their families
+          Together with their loved ones
         </p>
 
-        <h1 className="font-serif text-4xl md:text-5xl font-light text-foreground tracking-wide mb-2">
-          CHONCHA
+        <h1 className="text-5xl md:text-6xl text-foreground mb-1" style={{ fontFamily: "'Great Vibes', cursive" }}>
+          Choncha
         </h1>
-        <p className="font-serif text-2xl text-gold-dark mb-2">&</p>
-        <h1 className="font-serif text-4xl md:text-5xl font-light text-foreground tracking-wide mb-6">
-          TIMO
+        <p className="font-serif text-2xl text-gold-dark mb-1">&</p>
+        <h1 className="text-5xl md:text-6xl text-foreground mb-6" style={{ fontFamily: "'Great Vibes', cursive" }}>
+          Timo
         </h1>
 
         <div className="w-16 h-px bg-gold mx-auto mb-6" />
