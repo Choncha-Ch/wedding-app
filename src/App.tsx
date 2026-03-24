@@ -8,6 +8,7 @@ import Activities from "./pages/Activities";
 import ActivityDetail from "./pages/ActivityDetail";
 import Calendar from "./pages/Calendar";
 import Venues from "./pages/Venues";
+import VenueDetail from "./pages/VenueDetail";
 import Travel from "./pages/Travel";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/activities/:id" element={<ActivityDetail />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/venues" element={<Venues />} />
+          <Route path="/venues/:id" element={<VenueDetail />} />
           <Route path="/travel" element={<Travel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
