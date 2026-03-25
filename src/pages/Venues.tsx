@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { MapPin, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
-import venueNaka from '@/assets/venue-naka.jpg';
-import venueTraditional from '@/assets/venue-traditional.jpg';
+import venueNaka from '@/assets/naka-island-1.jpeg';
+import venueTraditional from '@/assets/chomdeun-pic1.jpeg';
 import venueGrand from '@/assets/venue-grand.jpg';
 
 const venues = [

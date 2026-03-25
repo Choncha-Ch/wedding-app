@@ -63,9 +63,16 @@ const RSVP = () => {
         <Heart className="w-8 h-8 text-gold mx-auto mb-4" />
         <h1 className="font-serif text-3xl text-foreground mb-2">RSVP</h1>
         <p className="font-sans text-xs tracking-[0.15em] text-muted-foreground uppercase">
-          We would be honoured by your presence
+          We would be honoured <br />
+          by your presence <br />
         </p>
       </div>
+
+    <div className="text-center mb-6 px-6">
+      <p className="font-sans text-[10px] tracking-[0.1em] text-muted-foreground/80 flex items-center justify-center gap-1.5 animate-pulse">
+        please reply by 30 April 2026
+      </p>
+    </div>  
 
       <div className="max-w-md mx-auto px-6 space-y-6">
         {/* Guest Information */}

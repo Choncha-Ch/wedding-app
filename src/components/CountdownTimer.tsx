@@ -32,10 +32,12 @@ const CountdownTimer = () => {
     <div className="flex gap-4 justify-center">
       {units.map(({ label, value }) => (
         <div key={label} className="text-center">
-          <div className="font-serif text-3xl md:text-4xl text-foreground font-light">
+          {/* Changed text-foreground to text-white and added a subtle shadow */}
+          <div className="font-serif text-3xl md:text-4xl text-white font-light drop-shadow-md">
             {String(value).padStart(2, '0')}
           </div>
-          <div className="font-sans text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
+          {/* Changed text-muted-foreground to text-white/70 (white with 70% opacity) */}
+          <div className="font-sans text-[10px] tracking-[0.2em] uppercase text-white/70 mt-1">
             {label}
           </div>
         </div>

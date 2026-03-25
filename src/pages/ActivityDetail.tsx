@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // 1. Added useEffect here
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MapPin, Clock, CalendarDays, Shirt, DollarSign, ExternalLink } from 'lucide-react';
@@ -12,6 +12,12 @@ const ActivityDetail = () => {
   const navigate = useNavigate();
   const event = events.find(e => e.id === id);
   const [accepted, setAccepted] = useState(getAcceptedEvents());
+
+  // 2. Add this block right here. 
+  // It triggers every time the 'id' in the URL changes.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   if (!event) {
     return (
@@ -31,6 +37,7 @@ const ActivityDetail = () => {
 
   return (
     <div className="min-h-screen bg-cream pb-24">
+      {/* ... the rest of your code remains the same ... */}
       <div className="px-4 pt-6">
         <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-muted-foreground font-sans text-sm mb-6">
           <ArrowLeft className="w-4 h-4" /> Back
@@ -43,6 +50,16 @@ const ActivityDetail = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <h1 className="font-serif text-3xl text-foreground mb-6">{event.title}</h1>
+
+        {event.imageUrl && (
+          <div className="mb-8 rounded-xl overflow-hidden shadow-md border border-border/50">
+            <img 
+              src={event.imageUrl} 
+              alt={event.title} 
+              className="w-full h-56 object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        )}
 
         <div className="space-y-4 mb-8">
           <div className="flex items-start gap-3">

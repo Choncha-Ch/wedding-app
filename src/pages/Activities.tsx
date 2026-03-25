@@ -32,6 +32,17 @@ const Activities = () => {
         </p>
       </div>
 
+<div className="text-center mb-6 px-6">
+  <p className="font-sans text-[10px] tracking-[0.1em] text-muted-foreground/80 flex items-center justify-center gap-1.5 animate-pulse">
+    <Star className="w-2.5 h-2.5" /> 
+    Tap an event for full details & prices
+  </p>
+</div>
+
+<div className="max-w-md mx-auto px-4 space-y-3"></div>
+
+<div className="max-w-md mx-auto px-4 space-y-3"></div>
+
       <div className="max-w-md mx-auto px-4 space-y-3">
         {events.map((event, i) => (
           <motion.div

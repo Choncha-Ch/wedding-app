@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import CountdownTimer from '@/components/CountdownTimer';
 import Navigation from '@/components/Navigation';
-import couplePortrait from '@/assets/couple-portrait.jpg';
+import couplePortrait from '@/assets/couple-pic1.jpg';
 
 const Index = () => {
   return (
@@ -12,16 +12,16 @@ const Index = () => {
         <img
           src={couplePortrait}
           alt="Choncha & Timo"
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-[center_90%] brightness-75"
           width={1024}
           height={1536}
         />
         {/* Subtle gradient - top and bottom only */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/70" />
 
         {/* Top text */}
         <motion.div
-          className="absolute top-12 left-0 right-0 text-center z-10 px-8"
+          className="absolute top-8 left-0 right-0 text-center z-10 px-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
@@ -31,14 +31,14 @@ const Index = () => {
           </p>
 
           <h1
-            className="text-5xl md:text-7xl text-white mb-1 drop-shadow-lg"
+            className="text-5xl md:text-7xl text-white mb-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]"
             style={{ fontFamily: "'Great Vibes', 'Pinyon Script', cursive", fontWeight: 400 }}
           >
             Choncha
           </h1>
-          <p className="text-2xl text-gold-light mb-1" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>&</p>
+          <p className="text-2xl text-gold-light mb-1 drop-shadow-md" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 300 }}>&</p>
           <h1
-            className="text-5xl md:text-7xl text-white drop-shadow-lg"
+            className="text-5xl md:text-7xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]"
             style={{ fontFamily: "'Great Vibes', 'Pinyon Script', cursive", fontWeight: 400 }}
           >
             Timo
@@ -47,7 +47,7 @@ const Index = () => {
 
         {/* Bottom content */}
         <motion.div
-          className="absolute bottom-8 left-0 right-0 text-center z-10 px-8"
+          className="absolute bottom-4 left-0 right-0 text-center z-10 px-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
