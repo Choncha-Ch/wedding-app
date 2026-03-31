@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { Home, Heart, CalendarDays, MapPin, Plane, PartyPopper } from 'lucide-react';
 
 const navItems = [
-  { to: '/', icon: Home, label: 'Home' },
+  { to: '/home', icon: Home, label: 'Home' },
   { to: '/rsvp', icon: Heart, label: 'RSVP' },
   { to: '/activities', icon: PartyPopper, label: 'Events' },
   { to: '/calendar', icon: CalendarDays, label: 'Calendar' },

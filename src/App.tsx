@@ -1,7 +1,15 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ScrollToTop from './components/ScrollToTop';
+
+// Components
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Pages
+import Welcome from "./pages/Welcome"; 
 import Index from "./pages/Index";
 import RSVP from "./pages/RSVP";
 import Activities from "./pages/Activities";
@@ -14,22 +22,39 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        {/* PUBLIC ROUTE */}
+        <Route path="/" element={<Welcome />} />
+
+        {/* PROTECTED ROUTES: Only accessible after verification */}
+        <Route path="/home" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+        <Route path="/rsvp" element={<ProtectedRoute><RSVP /></ProtectedRoute>} />
+        <Route path="/activities" element={<ProtectedRoute><Activities /></ProtectedRoute>} />
+        <Route path="/activities/:id" element={<ProtectedRoute><ActivityDetail /></ProtectedRoute>} />
+        <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
+        <Route path="/venues" element={<ProtectedRoute><Venues /></ProtectedRoute>} />
+        <Route path="/venues/:id" element={<ProtectedRoute><VenueDetail /></ProtectedRoute>} />
+        <Route path="/travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
+        
+        {/* 404 Page */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Sonner />
+      <Sonner position="top-center" expand={false} duration={3000} />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/rsvp" element={<RSVP />} />
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/activities/:id" element={<ActivityDetail />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/venues" element={<Venues />} />
-          <Route path="/venues/:id" element={<VenueDetail />} />
-          <Route path="/travel" element={<Travel />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <ScrollToTop /> 
+        <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

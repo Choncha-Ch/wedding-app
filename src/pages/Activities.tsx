@@ -1,96 +1,117 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, MapPin, Clock, Star } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { events } from '@/lib/events';
-import { getAcceptedEvents, toggleEvent } from '@/lib/storage';
+import { toggleEvent, saveAcceptedEvents } from '@/lib/storage';
+import { updateSingleActivity, fetchRSVPStatus, EVENT_MAP } from '@/lib/rsvp-service';
 import { toast } from 'sonner';
 
 const Activities = () => {
   const navigate = useNavigate();
-  const [accepted, setAccepted] = useState(getAcceptedEvents());
+  const [accepted, setAccepted] = useState<string[]>([]);
+  const [isSyncing, setIsSyncing] = useState<string | null>(null);
 
-  const handleToggle = (eventId: string, e: React.MouseEvent) => {
+  useEffect(() => {
+    const syncData = async () => {
+      try {
+        const data = await fetchRSVPStatus();
+        if (data) {
+          const dbAccepted: string[] = [];
+          Object.keys(EVENT_MAP).forEach(uiKey => {
+            if (data[EVENT_MAP[uiKey]] === true) dbAccepted.push(uiKey);
+          });
+          setAccepted(dbAccepted);
+          saveAcceptedEvents(dbAccepted);
+        }
+      } catch (e) {
+        console.error("Sync error:", e);
+      }
+    };
+    syncData();
+  }, []);
+
+  const handleToggle = async (eventId: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    const isJoining = !accepted.includes(eventId);
+    
     const updated = toggleEvent(eventId);
     setAccepted(updated);
-    if (updated.includes(eventId)) {
-      toast.success('Added to your calendar!');
-    } else {
-      toast('Removed from calendar');
+    
+    setIsSyncing(eventId);
+    try {
+      await updateSingleActivity(eventId, isJoining);
+      toast.success(isJoining ? 'Joined!' : 'Removed');
+    } catch (err) {
+      setAccepted(prev => isJoining ? prev.filter(id => id !== eventId) : [...prev, eventId]);
+      toast.error('Sync failed.');
+    } finally {
+      setIsSyncing(null);
     }
   };
 
   return (
-    <div className="min-h-screen bg-cream pb-24">
-      <div className="px-6 pt-10 pb-6 text-center">
-        <CalendarDays className="w-8 h-8 text-gold mx-auto mb-4" />
-        <h1 className="font-serif text-3xl text-foreground mb-2">Events & Activities</h1>
-        <p className="font-sans text-xs tracking-[0.15em] text-muted-foreground uppercase">
-          December 5 – 20, 2026
-        </p>
+    <div className="min-h-screen bg-cream pb-24 text-center">
+      <div className="px-6 pt-10 pb-6">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <CalendarDays className="w-8 h-8 text-gold mx-auto mb-4" />
+          <h1 className="font-serif text-3xl mb-2 text-foreground">Events & Activities</h1>
+          <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-sans">
+            ★ Please finalise your interest by 30th June ★
+          </p>
+          <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground/80 font-sans">
+             Tap an event for details & prices
+          </p>
+        </motion.div>
       </div>
 
-<div className="text-center mb-6 px-6">
-  <p className="font-sans text-[10px] tracking-[0.1em] text-muted-foreground/80 flex items-center justify-center gap-1.5 animate-pulse">
-    <Star className="w-2.5 h-2.5" /> 
-    Tap an event for full details & prices
-  </p>
-</div>
-
-<div className="max-w-md mx-auto px-4 space-y-3"></div>
-
-<div className="max-w-md mx-auto px-4 space-y-3"></div>
-
-      <div className="max-w-md mx-auto px-4 space-y-3">
+      <div className="max-w-md mx-auto px-4 space-y-4 text-left">
         {events.map((event, i) => (
           <motion.div
             key={event.id}
-            className={`bg-card rounded-lg p-4 shadow-sm border cursor-pointer transition-all hover:shadow-md ${
-              event.isWedding ? 'border-gold/50 ring-1 ring-gold/20' : 'border-border'
-            }`}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
+            className="bg-white rounded-xl overflow-hidden border border-border/50 cursor-pointer shadow-sm active:scale-[0.98] transition-transform"
             onClick={() => navigate(`/activities/${event.id}`)}
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  {event.isWedding && <Star className="w-3.5 h-3.5 text-gold flex-shrink-0" />}
-                  <h3 className="font-serif text-base text-foreground truncate">{event.title}</h3>
+            <div className="flex items-center"> {/* Added items-center here */}
+              {event.imageUrl && (
+                <div className="w-24 h-24 flex-shrink-0">
+                  <img src={event.imageUrl} className="w-full h-full object-cover" alt="" />
                 </div>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground font-sans">
-                  <span className="flex items-center gap-1">
-                    <CalendarDays className="w-3 h-3" /> {event.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {event.time}
-                  </span>
-                </div>
-                <p className="flex items-center gap-1 text-xs text-gold-dark font-sans mt-0.5">
-                  <MapPin className="w-3 h-3" /> {event.location}
-                </p>
-              </div>
-
-              {!event.isWedding && (
-                <button
-                  onClick={(e) => handleToggle(event.id, e)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-sans tracking-wide transition-all flex-shrink-0 ${
-                    accepted.includes(event.id)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'border border-border text-foreground hover:border-primary'
-                  }`}
-                >
-                  {accepted.includes(event.id) ? 'Going ✓' : 'Join'}
-                </button>
               )}
+              
+              <div className="p-4 flex flex-1 items-center justify-between min-w-0">
+                {/* Text Container: min-w-0 prevents text from pushing the button */}
+                <div className="min-w-0 pr-2">
+                  <h3 className="font-serif text-sm text-foreground leading-tight mb-1 truncate">
+                    {event.title}
+                  </h3>
+                  <p className="text-[9px] font-sans text-muted-foreground uppercase tracking-wider">
+                    {event.date}
+                  </p>
+                </div>
+
+                {/* Button Container: Fixed width prevents resizing */}
+                {!event.isWedding && (
+                  <button
+                    onClick={(e) => handleToggle(event.id, e)}
+                    className={`flex-shrink-0 w-[72px] py-1.5 rounded-full text-[9px] font-sans font-bold uppercase tracking-wider transition-all text-center ${
+                      accepted.includes(event.id) 
+                        ? 'bg-foreground text-background' 
+                        : 'border border-border text-muted-foreground'
+                    } ${isSyncing === event.id ? 'opacity-50 animate-pulse' : ''}`}
+                  >
+                    {accepted.includes(event.id) ? 'Going ✓' : 'Join'}
+                  </button>
+                )}
+              </div>
             </div>
           </motion.div>
         ))}
       </div>
-
       <Navigation />
     </div>
   );
