@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Welcome to your Wedding Application project
 
-TODO: Document your project here
+Testing Deployment
