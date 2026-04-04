@@ -104,7 +104,7 @@ const ActivityDetail = () => {
             </div>
           </div>
 
-          {/* RESTORED PRICING SECTION */}
+          {/* PRICING SECTION */}
           {(event.priceTHB || event.priceEUR) && (
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-border">
@@ -151,8 +151,34 @@ const ActivityDetail = () => {
           )}
         </div>
 
+        {/* ELEGANT TYPOGRAPHY STACK (Icon-free, Box-free) */}
+        {event.highlightLines && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-12 mt-4 text-center px-4"
+          >
+            <h4 className="font-sans text-[10px] uppercase tracking-[0.3em] text-gold-dark/60 font-bold mb-6">
+              Event Highlights
+            </h4>
+            
+            <div className="space-y-4">
+              {event.highlightLines.map((line, idx) => (
+                <div key={idx} className="flex flex-col items-center">
+                  <p className="font-serif text-base text-foreground/90 leading-relaxed italic max-w-[90%] mx-auto">
+                    "{line}"
+                  </p>
+                  {idx < event.highlightLines.length - 1 && (
+                    <div className="w-px h-3 bg-gold/30 mt-1" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}  
+
         {/* Description */}
-        <div className="bg-white/60 rounded-2xl p-6 border border-border/50 mb-8">
+        <div className="bg-white/60 rounded-2xl p-6 border border-border/50 mb-8 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
              <Info className="w-4 h-4 text-gold/60" />
              <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">About the event</h4>

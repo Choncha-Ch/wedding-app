@@ -35,6 +35,7 @@ export interface WeddingEvent {
   isWedding?: boolean;
   timeline?: TimelineItem[];
   colors?: EventColor[];
+  highlightLines?: string[]; 
 }
 
 export const events: WeddingEvent[] = [
@@ -45,7 +46,7 @@ export const events: WeddingEvent[] = [
     date: '5 Dec 2026',
     time: '8:00 PM',
     location: 'MAYA Beach Club',
-    description: 'Join us for a relaxed evening at Maya Beach Club, where the golden hour meets the shore. With chilled beats, a gentle sea breeze, and a stylish yet laid-back atmosphere, it\’s the perfect place to unwind. Whether you\’re lounging by the pool or sipping a cocktail on the sand, we look forward to a beautiful night of beachside and little party vibes together.',
+    description: 'Join us for a relaxed evening at Maya Beach Club, where the golden hour meets the shore. With chilled beats, a gentle sea breeze, and a stylish yet laid-back atmosphere, it\'s the perfect place to unwind. Whether you\'re lounging by the pool or sipping a cocktail on the sand, we look forward to a beautiful night of beachside and little party vibes together.',
     dressCode: 'Smart Casual / Beach Chic',
     priceTHB: '2,000',
     priceEUR: '55',
@@ -63,6 +64,10 @@ export const events: WeddingEvent[] = [
     priceTHB: '2,000',
     priceEUR: '55',
     mapLink: 'https://maps.google.com/?q=The+Black+Ginger+Phuket',
+    highlightLines: [
+        "Bill Bensley\n’s award-winning masterpiece: 2025 Best Most Luxurious Ambience in Asia",
+        "The authentic guardian of Phuket\n’s heritage, awarded the Michelin Guide Bib Gourmand."
+    ],
   },
   {
     id: 'cruise',
@@ -71,11 +76,15 @@ export const events: WeddingEvent[] = [
     date: '7 Dec 2026',
     time: '8:00 AM',
     location: 'Private Cruise',
-    description: 'Embark with us on a Private Cruise through the breathtaking wonders of the Andaman Sea. We will spend the day exploring the hidden emerald waters of the famous Hong Lagoon before heading to Phang Nga Bay. As the day draws to a close, we\’ll toast to the sunset from the deck, surrounded by the towering limestone karsts that make this region world-famous.',
+    description: 'Embark with us on a Private Cruise through the breathtaking wonders of the Andaman Sea. We will spend the day exploring the hidden emerald waters of the famous Hong Lagoon before heading to Phang Nga Bay. As the day draws to a close, we\'ll toast to the sunset from the deck, surrounded by the towering limestone karsts that make this region world-famous.',
     dressCode: 'Swimwear / Casual',
     priceTHB: '3,500',
     priceEUR: '97',
     mapLink: 'https://maps.google.com/?q=Phang+Nga+Bay+Phuket',
+    highlightLines: [
+        "Discover emerald waters and ancient caves in a UNESCO site of Phang Nga Bay",
+        "Iconic limestone towers in James Bond"
+    ],
   },
   {
     id: 'sundowner',
@@ -84,15 +93,18 @@ export const events: WeddingEvent[] = [
     date: '8 Dec 2026',
     time: '5:00 PM',
     location: 'Z Bar',
-    description: 'Before the big day arrives, let\’s take a moment to breathe and enjoy the view. We absolutely recommend a Sundowner Cocktail at Z Bar, perched on the edge of The Naka Island. With a refreshing drink in hand and a panoramic view of the sunset, it\’s the perfect, serene setting to relax and mingle before our wedding celebration begins.',
+    description: 'Before the big day arrives, let\'s take a moment to breathe and enjoy the view. We absolutely recommend a Sundowner Cocktail at Z Bar, perched on the edge of The Naka Island. With a refreshing drink in hand and a panoramic view of the sunset, it\'s the perfect, serene setting to relax and mingle before our wedding celebration begins.',
     dressCode: 'Resort Chic',
     priceTHB: '1,000',
     priceEUR: '28',
     mapLink: 'https://maps.google.com/?q=Z+Bar+Phuket',
+    highlightLines: [
+        "Uniting all island guests to unwind & relax together over sunset before we say I do"
+    ],
   },
   {
     id: 'wedding-day',
-    title: 'Wedding Day',
+    title: 'Exclusive Wedding Day',
     imageUrl: weddingDayImg,
     date: '9 Dec 2026',
     time: '3:00 PM',
@@ -101,6 +113,11 @@ export const events: WeddingEvent[] = [
     dressCode: 'Formal / Black Tie Optional',
     isWedding: true,
     mapLink: 'https://maps.google.com/?q=The+Naka+Island+Luxury+Resort',
+    highlightLines: [
+        "A five-minute boat crossing to a private island",
+        "Timeless elegance at the original Six Senses",
+        "Authentic cuisine curated by a Thai Royal Chef"
+    ],
     colors: [
       { name: 'Midnight Blue', hex: '#191970' },
       { name: 'Tiffany Blue', hex: '#0ABAB5' }
@@ -125,11 +142,15 @@ export const events: WeddingEvent[] = [
     date: '11 Dec 2026',
     time: '4:00 PM',
     location: 'YONA Boat Party',
-    description: 'Prepare for an afternoon of effortless glamour as we take the celebration to the sea. We will be spending an afternoon aboard YONA, the world\’s most iconic floating beach club. Expect a refined yet high-energy atmosphere with 360-degree ocean views, a stylish pool, and sunset beats. It is the perfect way to continue our festivities in the heart of the Andaman Sea—don\’t forget your most chic swimwear!',
+    description: 'Prepare for an afternoon of effortless glamour as we take the celebration to the sea. We will be spending an afternoon aboard YONA, the world\'s most iconic floating beach club. Expect a refined yet high-energy atmosphere with 360-degree ocean views, a stylish pool, and sunset beats. It is the perfect way to continue our festivities in the heart of the Andaman Sea—don\'t forget your most chic swimwear!',
     dressCode: 'Party / Swimwear',
     priceTHB: '2,000 - 6,000',
     priceEUR: '55 - 165',
     mapLink: 'https://maps.google.com/?q=YONA+boat+party+Phuket',
+    highlightLines: [
+        "Experience the world\n’s first floating beach club oasis with 360° views of the Andaman Sea",
+        "Effortless poolside glamour with sunset beats"
+    ],
   },
   {
     id: 'after-party',
@@ -138,11 +159,16 @@ export const events: WeddingEvent[] = [
     date: '11 Dec 2026',
     time: '11:00 PM',
     location: 'Illuzion Nightclub',
-    description: 'We\’ll keep the energy alive at Illuzion, one of the world\'s top-ranked nightclubs. Experience an electrifying night of high-end entertainment, state-of-the-art sound, and an atmosphere like no other in the heart of Patong. We\’ve reserved a space for our group to celebrate in style—get ready for an unforgettable night of music and dancing as we toast to the new Mr. & Mrs.!',
+    description: 'We\'ll keep the energy alive at Illuzion, one of the world\'s top-ranked nightclubs. Experience an electrifying night of high-end entertainment, state-of-the-art sound, and an atmosphere like no other in the heart of Patong. We\'ve reserved a space for our group to celebrate in style—get ready for an unforgettable night of music and dancing as we toast to the new Mr. & Mrs.!',
     dressCode: 'Party',
     priceTHB: '3,000',
     priceEUR: '85',
     mapLink: 'https://maps.google.com/?q=Illuzion+Nightclub+Phuket',
+    highlightLines: [
+        "Dance at the world\n’s #9 ranked nightclub",
+        "Exclusive balcony views of reserved VIP zone",
+        "Toast to the Mr. & Mrs."
+    ],
   },
   {
     id: 'outfit-rental',
@@ -155,6 +181,9 @@ export const events: WeddingEvent[] = [
     dressCode: 'Casual',
     priceTHB: '500',
     priceEUR: '13',
+    highlightLines: [
+        "Bespoke Thai costume service for authentic participation in the Tradtional Wedding"
+    ],
   },
   {
     id: 'ayutthaya',
@@ -176,10 +205,14 @@ export const events: WeddingEvent[] = [
     date: '19 Dec 2026',
     time: '9:00 AM',
     location: 'Chomdeun Complex, Suphanburi',
-    description: 'Join us for a morning steeped in heritage as we begin our life together with a Traditional Thai Wedding Ceremony. Experience the vibrant Khan Maak (Engagement Procession), where the groom and his family parade with music and offerings to \'negotiate\' for the bride\’s hand. This joyful, culture-filled ceremony is the heart of our celebration and a beautiful tribute to our roots.',
+    description: 'Join us for a morning steeped in heritage as we begin our life together with a Traditional Thai Wedding Ceremony. Experience the vibrant Khan Maak (Engagement Procession), where the groom and his family parade with music and offerings to \'negotiate\' for the bride\'s hand. This joyful, culture-filled ceremony is the heart of our celebration and a beautiful tribute to our roots.',
     dressCode: 'Traditional Thai / Formal',
     isWedding: true,
     mapLink: 'https://maps.google.com/?q=Chomdeun+Complex+Suphanburi',
+    highlightLines: [
+        "Architectural grace in a heritage teak manor",
+        "Experience a joyful Khan Maak procession, an authentic rituals steeped in Thai wedding"
+    ],
     colors: [
       { name: 'Dusky Purple', hex: '#99649A' }
     ],
@@ -201,6 +234,9 @@ export const events: WeddingEvent[] = [
     dressCode: 'Formal / Black Tie Optional',
     isWedding: true,
     mapLink: 'https://maps.google.com/?q=Sri+Uthong+Grand+Hotel+Suphanburi',
+    highlightLines: [
+        "A grand celebration, Thai official wedding"
+    ],
     colors: [
       { name: 'Burgundy Red', hex: '#800020' },
       { name: 'Olive Green', hex: '#808000' }
@@ -217,6 +253,4 @@ export const events: WeddingEvent[] = [
       { time: '11:00 PM', label: 'Celebration draws to a close' },
     ],
   },
-  
 ];
-

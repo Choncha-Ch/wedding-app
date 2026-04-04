@@ -15,7 +15,7 @@ const hotelRecs = [
   {
     dates: '5th – 7th Dec',
     name: 'The Slate, Nai Yang Beach, Phuket',
-    description: 'We recommend The Slate for its unique design that impressively blends Phuket\'s history with Thai architecture providing an authentic and intimate experience. Yet nestled within a Thai village, it offers a serene and local atmosphere unlike other more commercial beaches. Best of all, it is conveniently close to our wedding location!',
+    description: 'With 2025 Global Best Luxury Art Hotel & Best Luxury Design in Thailand awards, we recommend The Slate for its unique design that impressively blends Phuket\'s history with Thai architecture providing an authentic and intimate experience. Yet nestled within a Thai village, it offers a serene and local atmosphere unlike other more commercial beaches. Best of all, it is conveniently close to our wedding location!',
   },
   {
     dates: '8th – 10th Dec',
@@ -152,6 +152,17 @@ const Travel = () => {
                 <strong>DO NOT CROSS BORDERS.</strong> <br /> 
                 While Thailand remains a very safe and beautiful destination, we kindly ask our guests to avoid traveling across the borders, especially to Cambodia or Myanmar due to an alarming number of human trafficking cases linked to scam operations along these border regions. 
               </p>
+            </div>
+          </div>
+
+          <div className="bg-gold-50 border border-gold-100 rounded-lg p-4 mb-6 flex gap-3 shadow-sm">
+            <div>
+              <p className="font-sans text-xs text-gold-dark leading-relaxed font-medium">
+                <strong>For your onward travels:.</strong>
+              </p>  
+              <p className="font-sans text-xs text-gold-dark leading-relaxed font-medium">
+                In December, the Gulf of Thailand (Koh Samui, Koh Phangan, Koh Tao) experiences its peak thunderstorm season, in contrast to Andaman Sea (Phuket, Krabi, Phang Nga). Please review the weather carefully before planning your trip.
+              </p>  
             </div>
           </div>
 
