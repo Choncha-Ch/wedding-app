@@ -285,7 +285,7 @@ const VenueDetail = () => {
             {/* Special Links for Naka */}
             {id === 'naka-island' && (
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center px-4 mb-8">
-                <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1774579103608&key=GRP&app=resvlink" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Reserve Your Stay</a>
+                <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1774579103608&key=GRP&app=resvlink" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Book with Wedding Discount</a>
                 <a href="https://www.marriott.com/en-us/hotels/pyxlc-the-naka-island-a-luxury-collection-resort-and-spa-phuket/photos/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Naka Island Gallery</a>
               </div>
             )}
