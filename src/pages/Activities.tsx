@@ -58,7 +58,7 @@ const Activities = () => {
           <CalendarDays className="w-8 h-8 text-gold mx-auto mb-4" />
           <h1 className="font-serif text-3xl mb-2 text-foreground">Events & Activities</h1>
           <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-sans">
-            ★ Please finalise your interest by 30th June ★
+            ★ Please finalise your interest by 31th May ★
           </p>
           <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground/80 font-sans">
              Tap an event for details & prices

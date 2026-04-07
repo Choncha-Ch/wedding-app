@@ -123,8 +123,9 @@ export const updateSingleActivity = async (eventId: string, isJoining: boolean) 
 
 /**
  * 5. Special Hotel Booking for Sri Uthong Grand
+ * Updated to include suphan_share field
  */
-export const updateHotelBooking = async (isBooking: boolean, dateRange: string | null) => {
+export const updateHotelBooking = async (isBooking: boolean, dateRange: string | null, shareInfo: string = '') => {
   const savedPin = getCleanPin(); // Use helper
   if (!savedPin) throw new Error("No session found");
 
@@ -132,7 +133,48 @@ export const updateHotelBooking = async (isBooking: boolean, dateRange: string |
     .from('rsvps')
     .update({ 
       is_suphan_hotel: isBooking,
-      suphan_date: dateRange 
+      suphan_date: dateRange,
+      suphan_share: shareInfo
+    })
+    .eq('access_code', savedPin);
+
+  if (error) throw error;
+  return true;
+};
+
+/**
+ * 6. Phuket Arrival Flight Information
+ */
+export const updateFlightInfo = async (flightData: { flight: string, date: string, time: string }) => {
+  const savedPin = getCleanPin();
+  if (!savedPin) throw new Error("No session found");
+
+  const { error } = await supabase
+    .from('rsvps')
+    .update({ 
+      phuket_flight: flightData.flight,
+      phuket_date: flightData.date || null,
+      phuket_time: flightData.time || null
+    })
+    .eq('access_code', savedPin);
+
+  if (error) throw error;
+  return true;
+};
+
+/**
+ * 7. Naka Island Hotel Booking
+ */
+export const updateNakaBooking = async (isBooking: boolean, dateRange: string | null, shareInfo: string = '') => {
+  const savedPin = getCleanPin();
+  if (!savedPin) throw new Error("No session found");
+
+  const { error } = await supabase
+    .from('rsvps')
+    .update({ 
+      is_nakaisland_hotel: isBooking,
+      nakaisland_date: dateRange,
+      nakaisland_share: shareInfo
     })
     .eq('access_code', savedPin);
 

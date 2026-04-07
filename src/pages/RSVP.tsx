@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Check } from 'lucide-react';
+import { Heart, Check, Plane } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { saveRsvpData } from '@/lib/storage';
-import { submitRSVP, fetchRSVPStatus } from '@/lib/rsvp-service';
+import { submitRSVP, fetchRSVPStatus, updateFlightInfo } from '@/lib/rsvp-service';
 import { toast } from 'sonner';
 
 const rsvpEvents = [
@@ -20,11 +20,16 @@ const RSVP = () => {
     whatsapp: '',
     allergy: ''
   });
+  const [flightForm, setFlightForm] = useState({
+    flight: '',
+    date: '',
+    time: ''
+  });
   const [responses, setResponses] = useState<Record<string, boolean | null>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [flightLoading, setFlightLoading] = useState(false);
 
-  // FETCH ON LOAD: Pull existing info from Supabase to "Remember" the guest
   useEffect(() => {
     const loadExistingData = async () => {
       try {
@@ -37,14 +42,16 @@ const RSVP = () => {
             whatsapp: data.phone_number || '',
             allergy: data.allergy || ''
           });
-
+          setFlightForm({
+            flight: data.phuket_flight || '',
+            date: data.phuket_date || '',
+            time: data.phuket_time || ''
+          });
           setResponses({
             'phuket-wedding': data.is_phuket_wedding,
             'traditional-wedding': data.is_thai_wedding,
             'official-wedding': data.is_suphan_wedding
           });
-          
-          // If they have filled in an email, they've already submitted before
           if (data.email) setSubmitted(true);
         }
       } catch (err) {
@@ -71,6 +78,18 @@ const RSVP = () => {
       toast.error('Connection error. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleFlightSubmit = async () => {
+    setFlightLoading(true);
+    try {
+      await updateFlightInfo(flightForm);
+      toast.success('Flight info updated!');
+    } catch (err) {
+      toast.error('Failed to update flight info.');
+    } finally {
+      setFlightLoading(false);
     }
   };
 
@@ -127,6 +146,25 @@ const RSVP = () => {
         >
           {loading ? 'Saving...' : submitted ? 'Update RSVP' : 'Submit RSVP'}
         </button>
+
+        {/* NEW PHUKET ARRIVAL SECTION */}
+        <div className="bg-white/50 border border-gold/20 rounded-lg p-6 shadow-sm space-y-4">
+          <div className="flex items-center gap-2">
+            <Plane className="w-4 h-4 text-gold" />
+            <h2 className="font-serif text-lg text-foreground">Phuket Arrival</h2>
+          </div>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Fill in when flight is booked</p>
+          <div className="space-y-3">
+            <input placeholder="Flight Number" value={flightForm.flight} onChange={e => setFlightForm({...flightForm, flight: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
+            <div className="flex gap-2">
+              <input type="date" value={flightForm.date} onChange={e => setFlightForm({...flightForm, date: e.target.value})} className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
+              <input type="time" value={flightForm.time} onChange={e => setFlightForm({...flightForm, time: e.target.value})} className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
+            </div>
+            <button onClick={handleFlightSubmit} disabled={flightLoading} className="w-full py-2 bg-gold text-white rounded-md text-[10px] uppercase tracking-widest font-bold">
+              {flightLoading ? 'Updating...' : 'Update Flight Info'}
+            </button>
+          </div>
+        </div>
         
         {submitted && (
           <p className="text-center text-[10px] text-sage-dark uppercase tracking-[0.15em] font-medium">
