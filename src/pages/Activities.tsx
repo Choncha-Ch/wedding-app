@@ -61,7 +61,7 @@ const Activities = () => {
             ★ Please finalise your interest by 31th May ★
           </p>
           <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground/80 font-sans">
-             Tap an event for details & prices
+             <br /> <strong>Tap an event for details & prices</strong>
           </p>
         </motion.div>
       </div>

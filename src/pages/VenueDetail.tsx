@@ -185,7 +185,7 @@ const VenueDetail = () => {
             <h2 className="font-serif text-xl text-foreground mb-2">Accommodation</h2>
             
             {venue.accom_description && (
-              <p className="font-serif italic text-muted-foreground/90 text-base md:text-lg leading-loose mb-8">
+              <p className="font-serif italic text-muted-foreground text-base md:text-lg leading-loose mb-8">
                 "{venue.accom_description}"
               </p>
             )}
@@ -219,10 +219,10 @@ const VenueDetail = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="block font-sans text-xs font-bold uppercase tracking-wider text-foreground">
-                      {id === 'naka-island' ? "Book Island Sanctuary?" : "Room booking?"}
+                      {id === 'naka-island' ? "Sanctuary Booking?" : "Room booking?"}
                     </span>
                     <p className="font-sans text-[10px] text-muted-foreground italic">
-                      {id === 'naka-island' ? "Update island guests info" : "Interest by 31th May 2026"}
+                      {id === 'naka-island' ? "directly with guest-only rates" : "Interest by 31th May 2026"}
                     </p>
                   </div>
                   <button 
@@ -236,9 +236,17 @@ const VenueDetail = () => {
                   </button>
                 </div>
 
+                {/* Naka Island */}
+                {!isBooking && id === 'naka-island' && (
+                  <p className="font-sans text-[10px] text-gold-dark/80 text-center italic mt-2 bg-gold/5 py-2 rounded-lg border border-gold/10">
+                    Confirm your interest to unlock the private booking link with Choncha & Timo Wedding rates to directly reserve your stay.
+                  </p>
+                )}
+
                 <AnimatePresence>
                   {isBooking && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="pt-4 border-t border-gold/10 overflow-hidden space-y-4">
+
                       <div>
                         <p className="font-sans text-[10px] uppercase tracking-[0.15em] text-gold-dark mb-3 font-bold">Stay Period:</p>
                         <div className="grid grid-cols-1 gap-2">
@@ -265,7 +273,21 @@ const VenueDetail = () => {
                         />
                       </div>
 
-                      {/* RESTORED: Suphanburi Transportation Information */}
+                      {/* Naka Island Special Booking Link - Visible only after clicking Interested */}
+                      {id === 'naka-island' && (
+                        <div className="pb-4 border-b border-gold/10">
+                          <a 
+                            href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1774579103608&key=GRP&app=resvlink" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-full inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[10px] font-bold uppercase tracking-[0.15em] rounded-full shadow-md hover:bg-gold-dark transition-colors"
+                          >
+                            Book with Special Rate
+                          </a>
+                        </div>
+                      )}
+
+                      {/* Suphanburi Transportation Information */}
                       {id === 'sri-uthong-grand' && (
                         <div className="mt-4 pt-4 border-t border-gold/5">
                           <p className="text-[9px] text-muted-foreground font-sans uppercase tracking-tight leading-relaxed">
@@ -285,7 +307,6 @@ const VenueDetail = () => {
             {/* Special Links for Naka */}
             {id === 'naka-island' && (
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center px-4 mb-8">
-                <a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1774579103608&key=GRP&app=resvlink" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Reserve Your Room</a>
                 <a href="https://www.marriott.com/en-us/hotels/pyxlc-the-naka-island-a-luxury-collection-resort-and-spa-phuket/photos/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Naka Island Gallery</a>
               </div>
             )}

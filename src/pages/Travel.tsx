@@ -42,7 +42,7 @@ const hotelRecs = [
   },
   {
     dates: '11th – 12th Dec',
-    name: 'Patong Beach',
+    name: 'Hotel Indigo/ Hotel Clover, Patong Beach',
     description: 'For the liveliest experience, we recommend booking a hotel in Patong Beach within walking distance of both the Yona boat pier and Illuzion Nightclub. Patong traffic is infamously horrible, so staying where you can reach on foot is a major win.',
   },
   {
@@ -72,7 +72,7 @@ const travelDestinations: DestinationDetail[] = [
       }
     ],
     luxuryRetreats: ['The Nai Harn', 'The Shore at Katathani, Kata Noi', 'Avista Grand Phuket Karon'],
-    budgetFriendly: ['Katathani Resort, Kata Noi', 'The SIS Kata', 'Stay Wellbeing & Lifestyle Resort, Nai Harn', 'Baan Krathing Phuket Resort, Nai Harn']
+    budgetFriendly: ['Katathani Resort, Kata Noi', 'Baan Krathing Phuket Resort, Nai Harn']
   },
   {
     name: 'Khao Lak',
@@ -127,7 +127,7 @@ const travelDestinations: DestinationDetail[] = [
       }
     ],
     luxuryRetreats: ['Six Senses Koh Yao Noi', 'TreeHouse Villas', 'Koh Yao Island Resort', 'Santhiya Koh Yao Yai'],
-    budgetFriendly: ['Paradise Koh Yao', 'Cape Kudu Hotel', 'Koh Yao Yai Village', 'Kunna House']
+    budgetFriendly: ['Paradise Koh Yao', 'Cape Kudu Hotel', 'Koh Yao Yai Village', 'Hill House Koh Yao Noi']
   }, 
   {
     name: 'Koh Lanta Island',
@@ -194,7 +194,7 @@ const faqs = [
   { q: 'How do I get to Phuket?', a: 'We recommend to fly directly into Phuket International Airport (HKT). Direct flights are available from major cities in Asia and European hubs too.' },
   { q: 'How do I get to Suphanburi?', a: 'Suphanburi is approximately 2 hours north of Bangkok by car. We will arrange group transport from Bangkok for guests on 17th and 18th December at 12:00 o\'clock and a return trip to Bangkok on 20th December at 12:00 o\'clock.' },
   { q: 'What are transportations in Phuket and Suphanburi', a: 'There are taxis on online platform called "Grab". It is like Uber but Asian version. In Suphanburi, there are local taxis or tuktuk too but less common as it is not a touristic province.' },
-  { q: 'Do I need a visa for Thailand?', a: 'Most nationalities can enter Thailand visa-free for 30-60 days. Please check with your local Thai embassy.' },
+  { q: 'Do I need a visa for Thailand?', a: 'Most nationalities can enter Thailand visa-free for 30-60 days. Please check with your local Thai embassy. All non-Thai nationals entering Thailand after 1st of May 2025, must complete the TDAC online within 3 days before arrival - follow this link: https://tdac.immigration.go.th/arrival-card/#/home' },
   { q: 'What is the weather like in December?', a: 'Expect warm temperatures around 28-32°C with low humidity and plenty of sunshine.' },
   { q: 'What currency should I bring?', a: 'Thai Baht (THB). Credit cards are accepted at hotels/restaurants with a possible 3% additional charge (please check before paying), but carry cash for local markets. There is also a possibility to connect your bank with Thai PrompPay, where you can simply scan the price QR code for paying like a real Thai. Please carefully research about this option.' },
 ];
@@ -222,6 +222,19 @@ const Travel = () => {
             <Hotel className="w-5 h-5 text-gold" />
             <h2 className="font-serif text-xl text-foreground">Where to Stay</h2>
           </div>
+          <div className="mb-6 px-1">
+          <p className="font-sans text-xs text-muted-foreground leading-relaxed">
+            To make your planning seamless, we have curated a selection of recommended stays 
+            for each stage of our wedding journey. While we suggest these locations to keep 
+            you close to the festivities, <strong> you are welcome to book any preferred hotel 
+              within these same areas.</strong><br /> 
+            <br /><strong>Key Locations & Dates:</strong><br /> 
+            5th - 8th: Nai Yang Beach <br />
+            8th - 10th: The Wedding Location or Nai Yang beach <br />
+            10th - 11th: The Wedding Location or Southern Phuket <br />
+            11th - 12th/13th: Patong Beach
+          </p>
+        </div>
           <div className="space-y-3">
             {hotelRecs.map((hotel, i) => (
               <div key={i} className="bg-card rounded-lg border border-border overflow-hidden">
