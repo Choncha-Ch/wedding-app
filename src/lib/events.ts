@@ -92,7 +92,7 @@ export const events: WeddingEvent[] = [
     imageUrl: sundownerImg,
     date: '8 Dec 2026',
     time: '5:00 PM',
-    location: 'Z Bar',
+    location: 'Z Bar, The Naka Island',
     description: 'Before the big day arrives, let\'s take a moment to breathe and enjoy the view. We absolutely recommend a Sundowner Cocktail at Z Bar, perched on the edge of The Naka Island. With a refreshing drink in hand and a panoramic view of the sunset, it\'s the perfect, serene setting to relax and mingle before our wedding celebration begins.',
     dressCode: 'Resort Chic',
     priceTHB: '1,000',
