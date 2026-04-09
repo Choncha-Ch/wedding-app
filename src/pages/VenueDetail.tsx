@@ -198,7 +198,7 @@ const VenueDetail = () => {
                 </p>
                 <p className="font-sans text-[11px] text-muted-foreground italic mb-5">
                   Special pricing covers 5th - 13th Dec <br /> 
-                  <strong> Offer available until 31th August 2026 </strong>
+                  <strong> Offer available until 31st August 2026 </strong>
                 </p>
                 <div className="pt-4 border-t border-gold/10">
                   <p className="font-sans text-[10px] text-gold-dark leading-relaxed uppercase tracking-wider font-semibold">
