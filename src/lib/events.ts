@@ -99,6 +99,7 @@ export const events: WeddingEvent[] = [
     priceEUR: '28',
     mapLink: 'https://maps.google.com/?q=Z+Bar+Phuket',
     highlightLines: [
+        "Available only for guests staying on The Naka Island",
         "Uniting all island guests to unwind & relax together over sunset before we say I do"
     ],
   },

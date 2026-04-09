@@ -198,7 +198,7 @@ const VenueDetail = () => {
                 </p>
                 <p className="font-sans text-[11px] text-muted-foreground italic mb-5">
                   Special pricing covers 5th - 13th Dec <br /> 
-                  <strong> Offer available untill 31th August 2026 </strong>
+                  <strong> Offer available until 31th August 2026 </strong>
                 </p>
                 <div className="pt-4 border-t border-gold/10">
                   <p className="font-sans text-[10px] text-gold-dark leading-relaxed uppercase tracking-wider font-semibold">
@@ -222,7 +222,7 @@ const VenueDetail = () => {
                       {id === 'naka-island' ? "Sanctuary Booking?" : "Room booking?"}
                     </span>
                     <p className="font-sans text-[10px] text-muted-foreground italic">
-                      {id === 'naka-island' ? "directly with guest-only rates" : "Interest by 31th May 2026"}
+                      {id === 'naka-island' ? "directly with guest-only rates" : "Interest by 31st May 2026"}
                     </p>
                   </div>
                   <button 
@@ -310,6 +310,12 @@ const VenueDetail = () => {
                 <a href="https://www.marriott.com/en-us/hotels/pyxlc-the-naka-island-a-luxury-collection-resort-and-spa-phuket/photos/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-5 py-3 bg-gold text-white font-sans text-[9px] uppercase tracking-[0.15em] rounded-full min-w-[160px]">Naka Island Gallery</a>
               </div>
             )}
+
+            <div className="bg-gold/5 py-2 rounded-lg mb-4">
+              <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-gold-dark font-bold text-center">
+                Room Types & Price per Night
+              </p>
+            </div>
 
             {/* Room Price Cards */}
             <div className="space-y-4">

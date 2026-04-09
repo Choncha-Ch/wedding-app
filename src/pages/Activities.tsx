@@ -58,7 +58,7 @@ const Activities = () => {
           <CalendarDays className="w-8 h-8 text-gold mx-auto mb-4" />
           <h1 className="font-serif text-3xl mb-2 text-foreground">Events & Activities</h1>
           <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-sans">
-            ★ Please finalise your interest by 31th May ★
+            ★ Please finalise your interest by 31st May ★
           </p>
           <motion.div 
             className="mt-6 inline-block bg-gold/10 border border-gold/20 px-4 py-2 rounded-full shadow-sm"
