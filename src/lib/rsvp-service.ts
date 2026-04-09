@@ -14,19 +14,12 @@ export const EVENT_MAP: Record<string, string> = {
   'ayutthaya': 'is_ayutthaya'
 };
 
-/**
- * HELPER: Always get the pin in Uppercase and Trimmed
- */
 const getCleanPin = () => {
   const pin = localStorage.getItem('guest_pin');
   return pin ? pin.trim().toUpperCase() : null;
 };
 
-/**
- * 1. Verify & Auto-Initialize RSVP Row
- */
 export const verifyGuestCode = async (inputCode: string) => {
-  // TRANSFORM: Ensure input is Uppercase and Trimmed before even checking Supabase
   const cleanCode = inputCode.trim().toUpperCase();
 
   const { data: codeData, error: codeError } = await supabase
@@ -37,7 +30,6 @@ export const verifyGuestCode = async (inputCode: string) => {
 
   if (codeError || !codeData) return { success: false };
   
-  // UPSERT: Use the cleaned Uppercase code
   const { error: rsvpError } = await supabase
     .from('rsvps')
     .upsert({ 
@@ -46,18 +38,14 @@ export const verifyGuestCode = async (inputCode: string) => {
 
   if (rsvpError) console.error("Init Error:", rsvpError.message);
 
-  // SAVE: Store it cleaned in localStorage for other functions to use
   localStorage.setItem('guest_pin', cleanCode);
   localStorage.setItem('guest_name', codeData.guest_name);
   
   return { success: true, data: codeData };
 };
 
-/**
- * 2. Fetch Current Status
- */
 export const fetchRSVPStatus = async () => {
-  const savedPin = getCleanPin(); // Use helper
+  const savedPin = getCleanPin();
   if (!savedPin) return null;
 
   const { data, error } = await supabase
@@ -71,14 +59,16 @@ export const fetchRSVPStatus = async () => {
 };
 
 /**
- * 3. Full RSVP Submit
+ * UPDATED: Optimized for Auto-Save
+ * We removed the 'acceptedActivities' requirement here to avoid 
+ * conflicts with the separate Activities page logic.
  */
-export const submitRSVP = async (form: any, weddingResponses: Record<string, boolean | null>, acceptedActivities: string[]) => {
-  const savedPin = getCleanPin(); // Use helper
+export const submitRSVP = async (form: any, weddingResponses: Record<string, boolean | null>) => {
+  const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");
 
   const payload: any = {
-    access_code: savedPin, // Saved as UPPERCASE
+    access_code: savedPin,
     first_name: form.firstName,
     last_name: form.lastName,
     email: form.email,
@@ -86,14 +76,13 @@ export const submitRSVP = async (form: any, weddingResponses: Record<string, boo
     allergy: form.allergy || ''
   };
 
+  // Only update wedding columns if they are present in the responses object
   Object.keys(weddingResponses).forEach(id => {
     const dbCol = EVENT_MAP[id];
-    if (dbCol) payload[dbCol] = weddingResponses[id] === true;
-  });
-
-  acceptedActivities.forEach(id => {
-    const dbCol = EVENT_MAP[id];
-    if (dbCol) payload[dbCol] = true;
+    // We check for !== null so we don't overwrite with 'false' if the user hasn't touched it
+    if (dbCol && weddingResponses[id] !== null) {
+      payload[dbCol] = weddingResponses[id];
+    }
   });
 
   const { error } = await supabase
@@ -104,11 +93,8 @@ export const submitRSVP = async (form: any, weddingResponses: Record<string, boo
   return true;
 };
 
-/**
- * 4. Toggle Single Activity
- */
 export const updateSingleActivity = async (eventId: string, isJoining: boolean) => {
-  const savedPin = getCleanPin(); // Use helper
+  const savedPin = getCleanPin();
   const columnName = EVENT_MAP[eventId];
 
   if (!savedPin || !columnName) return;
@@ -121,12 +107,8 @@ export const updateSingleActivity = async (eventId: string, isJoining: boolean) 
   if (error) throw error;
 };
 
-/**
- * 5. Special Hotel Booking for Sri Uthong Grand
- * Updated to include suphan_share field
- */
 export const updateHotelBooking = async (isBooking: boolean, dateRange: string | null, shareInfo: string = '') => {
-  const savedPin = getCleanPin(); // Use helper
+  const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");
 
   const { error } = await supabase
@@ -142,17 +124,15 @@ export const updateHotelBooking = async (isBooking: boolean, dateRange: string |
   return true;
 };
 
-/**
- * 6. Phuket Arrival Flight Information
- */
 export const updateFlightInfo = async (flightData: { flight: string, date: string, time: string }) => {
   const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");
 
+  // Clean the data to ensure we don't send empty strings where Supabase expects nulls
   const { error } = await supabase
     .from('rsvps')
     .update({ 
-      phuket_flight: flightData.flight,
+      phuket_flight: flightData.flight || null,
       phuket_date: flightData.date || null,
       phuket_time: flightData.time || null
     })
@@ -162,9 +142,6 @@ export const updateFlightInfo = async (flightData: { flight: string, date: strin
   return true;
 };
 
-/**
- * 7. Naka Island Hotel Booking
- */
 export const updateNakaBooking = async (isBooking: boolean, dateRange: string | null, shareInfo: string = '') => {
   const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Check, Plane } from 'lucide-react';
+import { Heart, Plane } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { saveRsvpData } from '@/lib/storage';
 import { submitRSVP, fetchRSVPStatus, updateFlightInfo } from '@/lib/rsvp-service';
@@ -26,9 +26,8 @@ const RSVP = () => {
     time: ''
   });
   const [responses, setResponses] = useState<Record<string, boolean | null>>({});
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [flightLoading, setFlightLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const loadExistingData = async () => {
@@ -52,7 +51,6 @@ const RSVP = () => {
             'traditional-wedding': data.is_thai_wedding,
             'official-wedding': data.is_suphan_wedding
           });
-          if (data.email) setSubmitted(true);
         }
       } catch (err) {
         console.error("Error loading RSVP:", err);
@@ -63,33 +61,30 @@ const RSVP = () => {
     loadExistingData();
   }, []);
 
-  const handleSubmit = async () => {
-    if (!form.firstName || !form.lastName || !form.email) {
-      toast.error('Please fill in required fields');
-      return;
-    }
-    setLoading(true);
+  // AUTO-SAVE FUNCTION FOR MAIN INFO & RSVP
+  const autoSaveMain = async (updatedForm = form, updatedResponses = responses) => {
+    // We only save if the basic identity is present
+    if (!updatedForm.firstName || !updatedForm.lastName || !updatedForm.email) return;
+
+    setIsSaving(true);
     try {
-      await submitRSVP(form, responses, []); 
-      saveRsvpData({ ...form, responses, submitted: true });
-      setSubmitted(true);
-      toast.success('Your RSVP has been saved!');
+      await submitRSVP(updatedForm, updatedResponses, []);
+      saveRsvpData({ ...updatedForm, responses: updatedResponses, submitted: true });
+      toast.success('Changes saved automatically', { duration: 1000 });
     } catch (err) {
-      toast.error('Connection error. Please try again.');
+      console.error(err);
     } finally {
-      setLoading(false);
+      setIsSaving(false);
     }
   };
 
-  const handleFlightSubmit = async () => {
-    setFlightLoading(true);
+  // AUTO-SAVE FUNCTION FOR FLIGHTS
+  const autoSaveFlight = async (updatedFlight = flightForm) => {
     try {
-      await updateFlightInfo(flightForm);
-      toast.success('Flight info updated!');
+      await updateFlightInfo(updatedFlight);
+      toast.success('Flight info updated', { duration: 1000 });
     } catch (err) {
-      toast.error('Failed to update flight info.');
-    } finally {
-      setFlightLoading(false);
+      console.error(err);
     }
   };
 
@@ -105,36 +100,63 @@ const RSVP = () => {
         <Heart className="w-8 h-8 text-gold mx-auto mb-4" />
         <h1 className="font-serif text-3xl text-foreground mb-2">RSVP</h1>
         <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-sans">
-            ★ Please submit before 30 April 2026 ★
-          </p>
+          ★ Please submit before 30 April 2026 ★
+        </p>
+        
+        {isSaving && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6 inline-block bg-gold/10 border border-gold/20 px-4 py-2 rounded-full shadow-sm"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="mt-4 text-[10px] text-gold font-bold uppercase tracking-widest animate-pulse"
           >
-            <p className="text-[10px] uppercase tracking-[0.15em] text-gold font-bold font-sans flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
-              </span>
-              Please tap 'Update' to save
-            </p>
+            Saving updates...
           </motion.div>
+        )}
       </div>
 
       <div className="max-w-md mx-auto px-6 space-y-6">
+        {/* PERSONAL INFO SECTION */}
         <div className="bg-card rounded-lg p-6 shadow-sm border border-border">
           <h2 className="font-serif text-lg text-foreground mb-4">Your Information</h2>
           <div className="space-y-3">
-            <input placeholder="First Name" value={form.firstName} onChange={e => setForm({...form, firstName: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
-            <input placeholder="Last Name" value={form.lastName} onChange={e => setForm({...form, lastName: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
-            <input placeholder="Email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
-            <input placeholder="WhatsApp / Phone +49xxxxxxxxxxx" value={form.whatsapp} onChange={e => setForm({...form, whatsapp: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
-            <textarea placeholder="Allergies or Dietary Requirements" value={form.allergy} onChange={e => setForm({...form, allergy: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm h-20" />
+            <input 
+              placeholder="First Name" 
+              value={form.firstName} 
+              onChange={e => setForm({...form, firstName: e.target.value})}
+              onBlur={() => autoSaveMain()} 
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+            />
+            <input 
+              placeholder="Last Name" 
+              value={form.lastName} 
+              onChange={e => setForm({...form, lastName: e.target.value})} 
+              onBlur={() => autoSaveMain()}
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+            />
+            <input 
+              placeholder="Email" 
+              value={form.email} 
+              onChange={e => setForm({...form, email: e.target.value})} 
+              onBlur={() => autoSaveMain()}
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+            />
+            <input 
+              placeholder="WhatsApp / Phone +49xxxxxxxxxxx" 
+              value={form.whatsapp} 
+              onChange={e => setForm({...form, whatsapp: e.target.value})} 
+              onBlur={() => autoSaveMain()}
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+            />
+            <textarea 
+              placeholder="Allergies or Dietary Requirements" 
+              value={form.allergy} 
+              onChange={e => setForm({...form, allergy: e.target.value})} 
+              onBlur={() => autoSaveMain()}
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm h-20" 
+            />
           </div>
         </div>
 
+        {/* RSVP EVENT CARDS */}
         {rsvpEvents.map((event) => (
           <div key={event.id} className="bg-card rounded-lg p-6 shadow-sm border border-border">
             <h3 className="font-serif text-lg mb-1">{event.title}</h3>
@@ -143,7 +165,11 @@ const RSVP = () => {
               {[true, false].map(val => (
                 <button
                   key={String(val)}
-                  onClick={() => setResponses({ ...responses, [event.id]: val })}
+                  onClick={() => {
+                    const newResponses = { ...responses, [event.id]: val };
+                    setResponses(newResponses);
+                    autoSaveMain(form, newResponses);
+                  }}
                   className={`flex-1 py-2 rounded-md text-sm border transition-all ${responses[event.id] === val ? 'bg-primary text-white border-primary shadow-md' : 'bg-white border-border text-muted-foreground'}`}
                 >
                   {val ? 'Accept' : 'Decline'}
@@ -153,15 +179,7 @@ const RSVP = () => {
           </div>
         ))}
 
-        <button 
-          onClick={handleSubmit} 
-          disabled={loading} 
-          className="w-full py-4 bg-primary text-white rounded-md uppercase tracking-[0.2em] text-xs font-bold shadow-lg active:scale-[0.95] transition-transform"
-        >
-          {loading ? 'Saving...' : submitted ? 'Update RSVP' : 'Submit RSVP'}
-        </button>
-
-        {/* NEW PHUKET ARRIVAL SECTION */}
+        {/* FLIGHT ARRIVAL SECTION */}
         <div className="bg-white/50 border border-gold/20 rounded-lg p-6 shadow-sm space-y-4">
           <div className="flex items-center gap-2">
             <Plane className="w-4 h-4 text-gold" />
@@ -169,22 +187,35 @@ const RSVP = () => {
           </div>
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Fill in when flight is booked</p>
           <div className="space-y-3">
-            <input placeholder="Flight Number" value={flightForm.flight} onChange={e => setFlightForm({...flightForm, flight: e.target.value})} className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
+            <input 
+              placeholder="Flight Number" 
+              value={flightForm.flight} 
+              onChange={e => setFlightForm({...flightForm, flight: e.target.value})} 
+              onBlur={() => autoSaveFlight()}
+              className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+            />
             <div className="flex gap-2">
-              <input type="date" value={flightForm.date} onChange={e => setFlightForm({...flightForm, date: e.target.value})} className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
-              <input type="time" value={flightForm.time} onChange={e => setFlightForm({...flightForm, time: e.target.value})} className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" />
+              <input 
+                type="date" 
+                value={flightForm.date} 
+                onChange={e => setFlightForm({...flightForm, date: e.target.value})} 
+                onBlur={() => autoSaveFlight()}
+                className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+              />
+              <input 
+                type="time" 
+                value={flightForm.time} 
+                onChange={e => setFlightForm({...flightForm, time: e.target.value})} 
+                onBlur={() => autoSaveFlight()}
+                className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+              />
             </div>
-            <button onClick={handleFlightSubmit} disabled={flightLoading} className="w-full py-2 bg-gold text-white rounded-md text-[10px] uppercase tracking-widest font-bold">
-              {flightLoading ? 'Updating...' : 'Update Flight Info'}
-            </button>
           </div>
         </div>
         
-        {submitted && (
-          <p className="text-center text-[10px] text-sage-dark uppercase tracking-[0.15em] font-medium">
-            You can return to this page to update your details anytime.
-          </p>
-        )}
+        <p className="text-center text-[10px] text-sage-dark uppercase tracking-[0.15em] font-medium py-4">
+          You can return to this page to update your details anytime.
+        </p>
       </div>
       <Navigation />
     </div>

@@ -59,9 +59,6 @@ const Calendar = () => {
           December 5 – 20, 2026
         </p>
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
           className="mt-6 inline-block bg-gold/10 border border-gold/20 px-4 py-2 rounded-full shadow-sm"
         >
           <p className="text-[10px] uppercase tracking-[0.15em] text-gold font-bold font-sans flex items-center gap-2">
