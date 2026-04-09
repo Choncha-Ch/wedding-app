@@ -194,9 +194,25 @@ const faqs = [
   { q: 'How do I get to Phuket?', a: 'We recommend to fly directly into Phuket International Airport (HKT). Direct flights are available from major cities in Asia and European hubs too.' },
   { q: 'How do I get to Suphanburi?', a: 'Suphanburi is approximately 2 hours north of Bangkok by car. We will arrange group transport from Bangkok for guests on 17th and 18th December at 12:00 o\'clock and a return trip to Bangkok on 20th December at 12:00 o\'clock.' },
   { q: 'What are transportations in Phuket and Suphanburi', a: 'There are taxis on online platform called "Grab". It is like Uber but Asian version. In Suphanburi, there are local taxis or tuktuk too but less common as it is not a touristic province.' },
-  { q: 'Do I need a visa for Thailand?', a: 'Most nationalities can enter Thailand visa-free for 30-60 days. Please check with your local Thai embassy. All non-Thai nationals entering Thailand after 1st of May 2025, must complete the TDAC online within 3 days before arrival - follow this link: https://tdac.immigration.go.th/arrival-card/#/home' },
+  { 
+    q: 'Do I need a visa for Thailand?', 
+    a: (
+      <>
+        Most nationalities can enter Thailand visa-free for 30-60 days. Please check with your local Thai embassy. <br /> 
+        All non-Thai nationals entering Thailand after 1st of May 2025, must complete the TDAC online within 3 days before arrival - follow this link: {' '}
+        <a 
+          href="https://tdac.immigration.go.th/arrival-card/#/home" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-gold underline"
+        >
+          https://tdac.immigration.go.th
+        </a>
+      </>
+    ) 
+  },
   { q: 'What is the weather like in December?', a: 'Expect warm temperatures around 28-32°C with low humidity and plenty of sunshine.' },
-  { q: 'What currency should I bring?', a: 'Thai Baht (THB). Credit cards are accepted at hotels/restaurants with a possible 3% additional charge (please check before paying), but carry cash for local markets. There is also a possibility to connect your bank with Thai PrompPay, where you can simply scan the price QR code for paying like a real Thai. Please carefully research about this option.' },
+  { q: 'What currency should I bring?', a: 'Thai Baht (THB). Credit cards are accepted at hotels/restaurants with a possible 3% additional charge (please check before paying), but carry cash for local markets. There is also a possibility to connect your bank with Thai PromptPay, where you can simply scan the price QR code for paying like a real Thai. Please carefully research about this option.' },
 ];
 
 const Travel = () => {
