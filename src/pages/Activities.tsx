@@ -71,7 +71,7 @@ const Activities = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
               </span>
-              Tap each event for details & prices
+              Tap an event for details & prices
             </p>
           </motion.div>
         </motion.div>
