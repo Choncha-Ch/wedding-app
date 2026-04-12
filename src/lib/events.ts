@@ -12,7 +12,7 @@ import officialWeddingImg from '../assets/couple-pic2.jpg';
 
 export interface TimelineItem {
   time: string;
-  label: string;
+  label: string; 
 }
 
 export interface EventColor {
