@@ -10,6 +10,8 @@ export const EVENT_MAP: Record<string, string> = {
   'sundowner': 'is_sundowner',
   'boat-party': 'is_boat_party',
   'after-party': 'is_after_party',
+  'freedom-beach': 'is_freedom_beach',
+  'dimsum': 'is_dimsum',
   'outfit-rental': 'is_outfit_rental',
   'ayutthaya': 'is_ayutthaya'
 };

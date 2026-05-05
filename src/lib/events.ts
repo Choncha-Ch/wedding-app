@@ -5,6 +5,8 @@ import sundownerImg from '../assets/sundowner.jpeg';
 import weddingDayImg from '../assets/couple-pic1.jpg';
 import boatPartyImg from '../assets/boat-party.jpeg';
 import afterPartyImg from '../assets/after-after-party.jpeg';
+import freedomBeachImg from '../assets/freedom-beach.jpeg';
+import dimsumBreakfastImg from '../assets/dimsum-breakfast.jpeg';
 import outfitRentalImg from '../assets/couple-pic3.jpg';
 import ayutthayaImg from '../assets/ayutthaya.jpeg';
 import traditionalWeddingImg from '../assets/thai-couple.jpg';
@@ -51,6 +53,9 @@ export const events: WeddingEvent[] = [
     priceTHB: '2,000',
     priceEUR: '55',
     mapLink: 'https://maps.google.com/?q=MAYA+Beach+Club+Phuket',
+    highlightLines: [
+        "CURRENLY CLOSED due to Thai government\'s new regulation. Further information will be provided soon"
+    ],
   },
   {
     id: 'dinner',
@@ -169,6 +174,40 @@ export const events: WeddingEvent[] = [
         "Dance at the world\n’s #9 ranked nightclub",
         "Exclusive balcony views of reserved VIP zone",
         "Toast to the Mr. & Mrs."
+    ],
+  },
+  {
+    id: 'freedom-beach',
+    title: 'Beach Recovery',
+    imageUrl: freedomBeachImg,
+    date: '12 Dec 2026',
+    time: '15:00 PM',
+    location: 'Freedom Beach',
+    description: 'Shake off the party fatigue with a leisurely LATE AFTERNOON at Phuket\’s best-kept secret. Hidden behind a lush jungle canopy, Freedom Beach is a pristine sanctuary of crystal-clear turquoise waters and soft white sand. We\’ll lounge and recharge as we watch an electric sunset paint the Andaman sky in gold.',
+    dressCode: 'Swimwear',
+    priceTHB: '200',
+    priceEUR: '5',
+    mapLink: 'https://maps.google.com/?q=Freedom+Beach+Phuket',
+    highlightLines: [
+        "Ranked #18 in the World\’s 50 Best Beaches: An untouched tropical paradise.",
+        "The Golden Hour: A front-row seat to the most iconic sunset in the Andaman Sea."
+    ],
+  },
+  {
+    id: 'dimsum',
+    title: 'Southern Breakfast',
+    imageUrl: dimsumBreakfastImg,
+    date: '13 Dec 2026',
+    time: '7:30 AM',
+    location: 'Bang Jiam Dim Sum',
+    description: 'Rise and shine for a vibrant taste of Phuket\’s heritage! Dim Sum is a sacred traditional morning ritual in the south; expect a bustling, beautiful atmosphere filled with steaming baskets of handcrafted dumplings and rich Phuket coffee. It\’s the most vivacious way to fuel your Sunday morning before starting out your own traveling.',
+    dressCode: 'Casual/ Comfortable',
+    priceTHB: '400',
+    priceEUR: '12',
+    mapLink: 'https://maps.google.com/?q=Bang+Jiam+Dim+Sum+Phuket',
+    highlightLines: [
+        "A local legend for traditional southern breakfast: Just a 15-minute scenic drive from Patong Beach.",
+        "Phuket Heritage on a plate: Authentic Southern-style Dim Sum and artisan tea."
     ],
   },
   {
