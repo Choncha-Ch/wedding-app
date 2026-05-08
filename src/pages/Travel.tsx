@@ -4,6 +4,8 @@ import { Plane, Hotel, HelpCircle, ChevronDown, Map, AlertTriangle } from 'lucid
 import Navigation from '@/components/Navigation';
 
 // Image Imports
+import lipeImg from '@/assets/lipeImg.jpeg';
+import kradanImg from '@/assets/kradanImg.jpeg';
 import phuketSouthImg from '@/assets/phuketSouthImg.jpeg';
 import khaoLakImg from '@/assets/khaoLakImg.jpeg';
 import krabiImg from '@/assets/krabiImg.jpeg';
@@ -53,6 +55,44 @@ const hotelRecs = [
 ];
 
 const travelDestinations: DestinationDetail[] = [
+  {
+    name: 'Koh Kradan Island',
+    image: kradanImg, 
+    overall: 'A serene sanctuary of powdery white sand and transparent waters. In 2023, Koh Kradan was officially ranked #1 in the "Top 100 Beaches on Earth" by the UK\’s World Beach Guide, surpassing iconic global destinations for its pristine, untouched beauty.',
+    recommendations: [
+      { 
+        title: 'Ao Niang Beach', 
+        description: 'Located on the southern tip, this secluded beach offers the best house reef on the island. The waters here are so translucent that the vibrant coral colonies and sea fans are visible from the surface, providing a world-class snorkeling experience right off the shore.' 
+      },
+      { 
+        title: 'Paradise Beach', 
+        description: 'The crowning jewel that earned the island its global ranking. This 2-kilometer stretch of powdery sand faces the limestone karsts of the mainland, offering shallow, turquoise "swimming pools" that remain calm and clear throughout the season.' 
+      },
+      { 
+        title: 'Tham Morakot (Emerald Cave)', 
+        description: 'A true natural marvel. Guests must swim through an 80-meter dark sea tunnel to emerge into a breathtaking, hidden inland lagoon with white sand and high limestone walls open to the sky—an experience accessible only at low tide.' 
+      }
+    ],
+    luxuryRetreats: ['Mali Kradan', 'The Reef Resort'],
+    budgetFriendly: ['KALUME\' Eco Boutique Resort']
+  },
+  {
+    name: 'Koh Lipe Island',
+    image: lipeImg, 
+    overall: 'Often referred to as the "Maldives of Thailand," this tiny crescent-shaped island is famed for its vibrant turquoise waters and some of the most colorful shallow-water reefs in the archipelago.',
+    recommendations: [
+      { 
+        title: 'Jabang Seven-Color Coral', 
+        description: 'A legendary underwater pinnacle where soft corals in seven distinct hues—pinks, purples, and reds—bloom across the granite rocks. It is widely considered the most vibrant snorkeling site in Thailand, offering a kaleidoscopic display of marine life.' 
+      },
+      { 
+        title: 'Koh Hin Ngam', 
+        description: 'An extraordinary island of polished black volcanic stones that glisten like jewels when touched by the tide. Ancient legend says those who stack the stones are blessed—a truly mystical stop on your private longtail journey.' 
+      }
+    ],
+    luxuryRetreats: ['Irene Pool Villa Resort', 'Bulow Casa Grand View Resort', 'Serendipity Beach Resort'],
+    budgetFriendly: ['Ananya Lipe Resort', 'The Cliff Lipe']
+  },
   {
     name: 'Southern Phuket',
     image: phuketSouthImg,
