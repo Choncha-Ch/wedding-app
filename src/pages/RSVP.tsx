@@ -206,6 +206,7 @@ const RSVP = () => {
               onBlur={() => autoSaveFlight()}
               className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
             />
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Flight date and Arrival time</p>
             <div className="flex gap-2">
               <input 
                 type="date" 
@@ -214,9 +215,6 @@ const RSVP = () => {
                 onBlur={() => autoSaveFlight()}
                 className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
               />
-              </div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Flight date and Arrival time</p>
-              <div className="flex gap-2">
               <input 
                 type="time" 
                 value={flightForm.time} 
@@ -286,11 +284,16 @@ const RSVP = () => {
             <Car className="w-4 h-4 text-gold" />
             <h2 className="font-serif text-lg text-foreground">Transportation</h2>
           </div>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+            Bangkok - Suphanburi Transfers
+          </p>
           
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* TO SUPHAN */}
             <div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-2">Bangkok - Suphanburi Transfers</p>
+              <p className="text-[10px] text-gold-dark font-bold uppercase tracking-widest mb-2">
+                From Bangkok to Suphanburi
+              </p>
               <select 
                 value={flightForm.toSuphan}
                 onChange={e => {
@@ -300,7 +303,7 @@ const RSVP = () => {
                 }}
                 className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mb-2"
               >
-                <option value="">Select Option</option>
+                <option value="">Select Timetable</option>
                 <option value="17/12/26 late morning">17/12/26 late morning</option>
                 <option value="17/12/26 late afternoon">17/12/26 late afternoon</option>
                 <option value="18/12/26 late morning">18/12/26 late morning</option>
@@ -324,7 +327,9 @@ const RSVP = () => {
 
             {/* FROM SUPHAN */}
             <div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-2">Suphanburi - Bangkok Transfers</p>
+              <p className="text-[10px] text-gold-dark font-bold uppercase tracking-widest mb-2">
+                From Suphanburi to Bangkok
+              </p>
               <select 
                 value={flightForm.toBangkok}
                 onChange={e => {
@@ -334,7 +339,7 @@ const RSVP = () => {
                 }}
                 className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mb-2"
               >
-                <option value="">Select Option</option>
+                <option value="">Select Timetable</option>
                 <option value="20/12/26 late morning">20/12/26 late morning</option>
                 <option value="20/12/26 late afternoon">20/12/26 late afternoon</option>
                 <option value="do not need transport">Do not need transport</option>
