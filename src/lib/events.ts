@@ -6,11 +6,11 @@ import weddingDayImg from '../assets/couple-pic1.jpg';
 import boatPartyImg from '../assets/boat-party.jpeg';
 import afterPartyImg from '../assets/after-after-party.jpeg';
 import freedomBeachImg from '../assets/freedom-beach.jpeg';
-import dimsumBreakfastImg from '../assets/dimsum-breakfast.jpeg';
 import outfitRentalImg from '../assets/couple-pic3.jpg';
 import ayutthayaImg from '../assets/ayutthaya.jpeg';
 import traditionalWeddingImg from '../assets/thai-couple.jpg';
 import officialWeddingImg from '../assets/couple-pic2.jpg';
+import suphanTravelImg from '../assets/buffaloImg.jpeg';
 
 export interface TimelineItem {
   time: string;
@@ -194,28 +194,11 @@ export const events: WeddingEvent[] = [
     ],
   },
   {
-    id: 'dimsum',
-    title: 'Southern Breakfast',
-    imageUrl: dimsumBreakfastImg,
-    date: '13 Dec 2026',
-    time: '7:30 AM',
-    location: 'Bang Jiam Dim Sum',
-    description: 'Rise and shine for a vibrant taste of Phuket\’s heritage! Dim Sum is a sacred traditional morning ritual in the south; expect a bustling, beautiful atmosphere filled with steaming baskets of handcrafted dumplings and rich Phuket coffee. It\’s the most vivacious way to fuel your Sunday morning before starting out your own traveling.',
-    dressCode: 'Casual/ Comfortable',
-    priceTHB: '400',
-    priceEUR: '12',
-    mapLink: 'https://maps.google.com/?q=Bang+Jiam+Dim+Sum+Phuket',
-    highlightLines: [
-        "A local legend for traditional southern breakfast: Just a 15-minute scenic drive from Patong Beach.",
-        "Phuket Heritage on a plate: Authentic Southern-style Dim Sum and artisan tea."
-    ],
-  },
-  {
     id: 'outfit-rental',
     title: 'Traditional Outfit Rental',
     imageUrl: outfitRentalImg,
     date: '17 Dec 2026',
-    time: '3:00 PM',
+    time: '3:00 PM or 5:30 PM',
     location: 'Costume Rental Shop',
     description: 'To celebrate in true local style, we have selected a Dusky Purple theme for our traditional attire. We have arranged for a premium Thai outfit rental service to help you find the perfect ensemble. Whether you prefer a classic Silk Chut Thai or a modern interpretation, our stylists will ensure you look and feel your best in our signature wedding color.',
     dressCode: 'Casual',
@@ -291,6 +274,25 @@ export const events: WeddingEvent[] = [
       { time: '8:30 PM', label: 'First dance & open floor' },
       { time: '9:00 PM', label: 'Dancing & Celebration' },
       { time: '11:00 PM', label: 'Celebration draws to a close' },
+    ],
+  },
+   {
+    id: 'suphan-travel',
+    title: 'Suphanburi Cultural Tour',
+    imageUrl: suphanTravelImg,
+    date: '20 Dec 2026',
+    time: '10:00 AM',
+    location: 'Suphanburi',
+    description: 'Before we journey back to the energy of Bangkok, we invite you to see a bit more of the Bride\’s heritage in the authentic heart of Thailand. Experience the charm of rural life in a province far from the tourist trails, where the pace is slower and the culture remains untouched. This is an intimate glimpse into the local, less-developed soul of our home before the final curtain of our Odyssey.',
+    dressCode: 'Casual & Comfortable',
+    priceTHB: '500',
+    priceEUR: '12',
+    mapLink: 'https://maps.google.com/?q=Sri+Uthong+Grand+Hotel+Suphanburi',
+    highlightLines: [
+        "Buffalo Village: A nostalgic look at Thailand\’s agrarian roots and the gentle giants of the rice fields.",
+        "Samchuk 100-Year Market: An award-winning heritage riverside market frozen in the atmosphere of old Siam.",
+        "Wat Phra Si Rattana Mahathat: A sacred temple dating back over 600 years, steeped in Suphanburi\’s ancient history.",
+        "The Dragon Descendants Museum: An architectural marvel celebrating the deep-rooted Chinese heritage of the region."
     ],
   },
 ];

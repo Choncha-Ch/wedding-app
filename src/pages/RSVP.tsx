@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Plane } from 'lucide-react';
+import { Heart, Plane, Car } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { saveRsvpData } from '@/lib/storage';
-import { submitRSVP, fetchRSVPStatus, updateFlightInfo } from '@/lib/rsvp-service';
+import { submitRSVP, fetchRSVPStatus, updateFlightInfo, FlightData } from '@/lib/rsvp-service';
 import { toast } from 'sonner';
 
 const rsvpEvents = [
@@ -20,11 +20,21 @@ const RSVP = () => {
     whatsapp: '',
     allergy: ''
   });
-  const [flightForm, setFlightForm] = useState({
+
+  const [flightForm, setFlightForm] = useState<FlightData>({
     flight: '',
     date: '',
-    time: ''
+    time: '',
+    bangkokFlight: '',
+    bangkokDate: '',
+    bangkokTime: '',
+    bangkokAirport: '',
+    toSuphan: '',
+    toBangkok: '',
+    numberSuphan: '',
+    numberBangkok: ''
   });
+
   const [responses, setResponses] = useState<Record<string, boolean | null>>({});
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -44,7 +54,15 @@ const RSVP = () => {
           setFlightForm({
             flight: data.phuket_flight || '',
             date: data.phuket_date || '',
-            time: data.phuket_time || ''
+            time: data.phuket_time || '',
+            bangkokFlight: data.bangkok_flight || '',
+            bangkokDate: data.bangkok_date || '',
+            bangkokTime: data.bangkok_time || '',
+            bangkokAirport: data.bangkok_airport || '',
+            toSuphan: data.to_suphan || '',
+            toBangkok: data.to_bangkok || '',
+            numberSuphan: data.number_suphan || '',
+            numberBangkok: data.number_bangkok || ''
           });
           setResponses({
             'phuket-wedding': data.is_phuket_wedding,
@@ -61,14 +79,11 @@ const RSVP = () => {
     loadExistingData();
   }, []);
 
-  // AUTO-SAVE FUNCTION FOR MAIN INFO & RSVP
   const autoSaveMain = async (updatedForm = form, updatedResponses = responses) => {
-    // We only save if the basic identity is present
     if (!updatedForm.firstName || !updatedForm.lastName || !updatedForm.email) return;
-
     setIsSaving(true);
     try {
-      await submitRSVP(updatedForm, updatedResponses, []);
+      await submitRSVP(updatedForm, updatedResponses);
       saveRsvpData({ ...updatedForm, responses: updatedResponses, submitted: true });
       toast.success('Changes saved automatically', { duration: 1000 });
     } catch (err) {
@@ -78,11 +93,10 @@ const RSVP = () => {
     }
   };
 
-  // AUTO-SAVE FUNCTION FOR FLIGHTS
   const autoSaveFlight = async (updatedFlight = flightForm) => {
     try {
       await updateFlightInfo(updatedFlight);
-      toast.success('Flight info updated', { duration: 1000 });
+      toast.success('Travel info updated', { duration: 1000 });
     } catch (err) {
       console.error(err);
     }
@@ -179,13 +193,15 @@ const RSVP = () => {
           </div>
         ))}
 
-        {/* FLIGHT ARRIVAL SECTION */}
+        {/* PHUKET ARRIVAL SECTION */}
         <div className="bg-white/50 border border-gold/20 rounded-lg p-6 shadow-sm space-y-4">
           <div className="flex items-center gap-2">
             <Plane className="w-4 h-4 text-gold" />
             <h2 className="font-serif text-lg text-foreground">Phuket Arrival</h2>
           </div>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Fill in when flight is booked</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest italic">
+            Fill in when flight is booked
+          </p>
           <div className="space-y-3">
             <input 
               placeholder="Flight Number" 
@@ -195,21 +211,187 @@ const RSVP = () => {
               className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
             />
             <div className="flex gap-2">
-              <input 
-                type="date" 
-                value={flightForm.date} 
-                onChange={e => setFlightForm({...flightForm, date: e.target.value})} 
-                onBlur={() => autoSaveFlight()}
-                className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
-              />
-              <input 
-                type="time" 
-                value={flightForm.time} 
-                onChange={e => setFlightForm({...flightForm, time: e.target.value})} 
-                onBlur={() => autoSaveFlight()}
-                className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
-              />
+              <div className="flex-1">
+                <label className="text-[8px] uppercase tracking-widest text-muted-foreground ml-1">Flight Date</label>
+                <input 
+                  type="date" 
+                  value={flightForm.date} 
+                  onChange={e => setFlightForm({...flightForm, date: e.target.value})} 
+                  onBlur={() => autoSaveFlight()}
+                  className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mt-1" 
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-[8px] uppercase tracking-widest text-muted-foreground ml-1">Arrival Time</label>
+                <input 
+                  type="time" 
+                  value={flightForm.time} 
+                  onChange={e => setFlightForm({...flightForm, time: e.target.value})} 
+                  onBlur={() => autoSaveFlight()}
+                  className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mt-1" 
+                />
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* SUPHANBURI ARRIVAL SECTION */}
+        <div className="bg-white/50 border border-gold/20 rounded-lg p-6 shadow-sm space-y-4">
+          <div className="flex items-center gap-2">
+            <Plane className="w-4 h-4 text-gold" />
+            <h2 className="font-serif text-lg text-foreground">Suphanburi Arrival</h2>
+          </div>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest italic">
+            Fill in when flight is booked 
+            <br /> Arrival in Bangkok 
+          </p>
+          
+          <div className="space-y-3">
+            <div className="flex gap-2">
+              <input 
+                placeholder="Flight No." 
+                value={flightForm.bangkokFlight} 
+                onChange={e => setFlightForm({...flightForm, bangkokFlight: e.target.value})} 
+                onBlur={() => autoSaveFlight()}
+                className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
+              />
+              <select 
+                value={flightForm.bangkokAirport}
+                onChange={e => {
+                  const updated = {...flightForm, bangkokAirport: e.target.value};
+                  setFlightForm(updated);
+                  autoSaveFlight(updated);
+                }}
+                className="w-1/3 px-2 py-2.5 bg-background border border-border rounded-md text-sm"
+              >
+                <option value="">Airport</option>
+                <option value="BKK">BKK</option>
+                <option value="DMK">DMK</option>
+              </select>
+            </div>
+            
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <label className="text-[8px] uppercase tracking-widest text-muted-foreground ml-1">Flight Date</label>
+                <input 
+                  type="date" 
+                  value={flightForm.bangkokDate} 
+                  onChange={e => setFlightForm({...flightForm, bangkokDate: e.target.value})} 
+                  onBlur={() => autoSaveFlight()}
+                  className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mt-1" 
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-[8px] uppercase tracking-widest text-muted-foreground ml-1">Arrival Time</label>
+                <input 
+                  type="time" 
+                  value={flightForm.bangkokTime} 
+                  onChange={e => setFlightForm({...flightForm, bangkokTime: e.target.value})} 
+                  onBlur={() => autoSaveFlight()}
+                  className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm mt-1" 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* TRANSPORTATION SECTION */}
+        <div className="bg-white/50 border border-gold/20 rounded-lg p-6 shadow-sm space-y-4">
+          <div className="flex items-center gap-2">
+            <Car className="w-4 h-4 text-gold" />
+            <h2 className="font-serif text-lg text-foreground">Transportation</h2>
+          </div>
+          
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest italic">
+            Bangkok — Suphanburi Transfers
+          </p>
+          
+          <div className="space-y-5">
+            {/* TO SUPHANBURI */}
+            <div>
+              <label className="text-[9px] uppercase tracking-widest text-gold-dark font-bold">
+                Departure Bangkok to Suphanburi
+              </label>
+              <select 
+                value={flightForm.toSuphan}
+                onChange={e => {
+                  const updated = {...flightForm, toSuphan: e.target.value};
+                  setFlightForm(updated);
+                  autoSaveFlight(updated);
+                }}
+                className="w-full mt-1 px-3 py-2.5 bg-background border border-border rounded-md text-xs font-sans"
+              >
+                <option value="">Select Timetable</option>
+                <option value="17/12/26 late morning/noon">17/12/26 late morning </option>
+                <option value="17/12/26 afternoon/late">17/12/26 late afternoon </option>
+                <option value="18/12/26 late morning/noon">18/12/26 late morning </option>
+                <option value="18/12/26 afternoon/late">18/12/26 late afternoon </option>
+              </select>
+              
+              <div className="mt-3">
+                <label className="text-[8px] text-muted-foreground uppercase tracking-widest">
+                  Total guests requesting transport
+                </label>
+                <select 
+                  value={flightForm.numberSuphan}
+                  onChange={e => {
+                    const updated = {...flightForm, numberSuphan: e.target.value};
+                    setFlightForm(updated);
+                    autoSaveFlight(updated);
+                  }}
+                  className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-md text-xs font-sans"
+                >
+                  <option value="">Select Number of Total Guests</option>
+                  {[1, 2, 3, 4].map(num => <option key={num} value={num}>{num}</option>)}
+                </select>
+              </div>
+            </div>
+
+            {/* TO BANGKOK */}
+            <div>
+              <label className="text-[9px] uppercase tracking-widest text-gold-dark font-bold">
+                Departure Suphanburi to Bangkok
+              </label>
+              <select 
+                value={flightForm.toBangkok}
+                onChange={e => {
+                  const updated = {...flightForm, toBangkok: e.target.value};
+                  setFlightForm(updated);
+                  autoSaveFlight(updated);
+                }}
+                className="w-full mt-1 px-3 py-2.5 bg-background border border-border rounded-md text-xs font-sans"
+              >
+                <option value="">Select Timetable</option>
+                <option value="20/12/26 late morning/noon">20/12/26 late morning/noon</option>
+                <option value="20/12/26 late afternoon/evening">20/12/26 late afternoon/evening</option>
+              </select>
+
+              <div className="mt-3">
+                <label className="text-[8px] text-muted-foreground uppercase tracking-widest">
+                  Total guests requesting transport
+                </label>
+                <select 
+                  value={flightForm.numberBangkok}
+                  onChange={e => {
+                    const updated = {...flightForm, numberBangkok: e.target.value};
+                    setFlightForm(updated);
+                    autoSaveFlight(updated);
+                  }}
+                  className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-md text-xs font-sans"
+                >
+                  <option value="">Select Number of Total Guests</option>
+                  {[1, 2, 3, 4].map(num => <option key={num} value={num}>{num}</option>)}
+                </select>
+              </div>
+            </div>
+
+            {/* Elegant Disclaimer */}
+            <p className="text-[9px] leading-relaxed text-muted-foreground italic border-l-2 border-gold/30 pl-3 mt-4 font-sans">
+              Please INCLUDE YOURSELF and PLUS ONES.  
+              <br /> However,
+              <strong> do not include guests who are directly invited and have their own app access to register themselves.</strong> 
+              <br /> This is only regarding your additional plus-ones.
+            </p>
           </div>
         </div>
         

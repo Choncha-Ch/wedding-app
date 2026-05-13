@@ -292,8 +292,7 @@ const VenueDetail = () => {
                         <div className="mt-4 pt-4 border-t border-gold/5">
                           <p className="text-[9px] text-muted-foreground font-sans uppercase tracking-tight leading-relaxed">
                             <strong className="text-gold-dark">Transportation</strong> <br /> 
-                            Departure from BKK: <strong>12 PM</strong> on your arrival date<br /> 
-                            Return to BKK: <strong>12 PM</strong> on December 20th.<br /><br />
+                            <strong>please select your preferred shuttle timetable at RSVP page</strong> <br /> 
                             <span className="italic">* We will contact you closer to the date for confirmation.</span>
                           </p>
                         </div>

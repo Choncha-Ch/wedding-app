@@ -1,5 +1,19 @@
 import { supabase } from './supabase';
 
+export interface FlightData {
+  flight?: string;
+  date?: string;
+  time?: string;
+  bangkokFlight?: string;
+  bangkokDate?: string;
+  bangkokTime?: string;
+  bangkokAirport?: string;
+  toSuphan?: string;
+  toBangkok?: string;
+  numberSuphan?: string | number; 
+  numberBangkok?: string | number; 
+}
+
 export const EVENT_MAP: Record<string, string> = {
   'phuket-wedding': 'is_phuket_wedding',
   'traditional-wedding': 'is_thai_wedding',
@@ -11,9 +25,9 @@ export const EVENT_MAP: Record<string, string> = {
   'boat-party': 'is_boat_party',
   'after-party': 'is_after_party',
   'freedom-beach': 'is_freedom_beach',
-  'dimsum': 'is_dimsum',
   'outfit-rental': 'is_outfit_rental',
-  'ayutthaya': 'is_ayutthaya'
+  'ayutthaya': 'is_ayutthaya',
+  'suphan-travel': 'is_suphan_travel'
 };
 
 const getCleanPin = () => {
@@ -126,17 +140,33 @@ export const updateHotelBooking = async (isBooking: boolean, dateRange: string |
   return true;
 };
 
-export const updateFlightInfo = async (flightData: { flight: string, date: string, time: string }) => {
+export const updateFlightInfo = async (flightData: FlightData) => {
   const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");
 
-  // Clean the data to ensure we don't send empty strings where Supabase expects nulls
+  // Helper to ensure empty strings are sent as NULL to prevent DB format errors
+  const clean = (val: any) => (val && String(val).trim() !== '' ? val : null);
+  
+  // Helper to ensure numbers are sent as integers for int8 columns
+  const cleanInt = (val: any) => {
+    const parsed = parseInt(val);
+    return isNaN(parsed) ? null : parsed;
+  };
+
   const { error } = await supabase
     .from('rsvps')
     .update({ 
-      phuket_flight: flightData.flight || null,
-      phuket_date: flightData.date || null,
-      phuket_time: flightData.time || null
+      phuket_flight: clean(flightData.flight),
+      phuket_date: clean(flightData.date),
+      phuket_time: clean(flightData.time),
+      bangkok_flight: clean(flightData.bangkokFlight),
+      bangkok_date: clean(flightData.bangkokDate),
+      bangkok_time: clean(flightData.bangkokTime),
+      bangkok_airport: clean(flightData.bangkokAirport),
+      to_suphan: clean(flightData.toSuphan),
+      to_bangkok: clean(flightData.toBangkok),
+      number_suphan: cleanInt(flightData.numberSuphan),
+      number_bangkok: cleanInt(flightData.numberBangkok)
     })
     .eq('access_code', savedPin);
 
