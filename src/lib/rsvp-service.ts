@@ -1,19 +1,5 @@
 import { supabase } from './supabase';
 
-export interface FlightData {
-  flight?: string;
-  date?: string;
-  time?: string;
-  bangkokFlight?: string;
-  bangkokDate?: string;
-  bangkokTime?: string;
-  bangkokAirport?: string;
-  toSuphan?: string;
-  toBangkok?: string;
-  numberSuphan?: string | number; 
-  numberBangkok?: string | number; 
-}
-
 export const EVENT_MAP: Record<string, string> = {
   'phuket-wedding': 'is_phuket_wedding',
   'traditional-wedding': 'is_thai_wedding',
@@ -140,33 +126,25 @@ export const updateHotelBooking = async (isBooking: boolean, dateRange: string |
   return true;
 };
 
-export const updateFlightInfo = async (flightData: FlightData) => {
+export const updateFlightInfo = async (flightData: any) => {
   const savedPin = getCleanPin();
   if (!savedPin) throw new Error("No session found");
-
-  // Helper to ensure empty strings are sent as NULL to prevent DB format errors
-  const clean = (val: any) => (val && String(val).trim() !== '' ? val : null);
-  
-  // Helper to ensure numbers are sent as integers for int8 columns
-  const cleanInt = (val: any) => {
-    const parsed = parseInt(val);
-    return isNaN(parsed) ? null : parsed;
-  };
 
   const { error } = await supabase
     .from('rsvps')
     .update({ 
-      phuket_flight: clean(flightData.flight),
-      phuket_date: clean(flightData.date),
-      phuket_time: clean(flightData.time),
-      bangkok_flight: clean(flightData.bangkokFlight),
-      bangkok_date: clean(flightData.bangkokDate),
-      bangkok_time: clean(flightData.bangkokTime),
-      bangkok_airport: clean(flightData.bangkokAirport),
-      to_suphan: clean(flightData.toSuphan),
-      to_bangkok: clean(flightData.toBangkok),
-      number_suphan: cleanInt(flightData.numberSuphan),
-      number_bangkok: cleanInt(flightData.numberBangkok)
+      phuket_flight: flightData.flight || null,
+      phuket_date: flightData.date || null,
+      phuket_time: flightData.time || null,
+      bangkok_flight: flightData.bangkokFlight || null,
+      bangkok_airport: flightData.bangkokAirport || null,
+      bangkok_date: flightData.bangkokDate || null,
+      bangkok_time: flightData.bangkokTime || null,
+      to_suphan: flightData.toSuphan || null,
+      to_bangkok: flightData.toBangkok || null,
+      // Default to 0 if no value is provided
+      number_suphan: flightData.numberSuphan !== '' ? parseInt(flightData.numberSuphan) : 0,
+      number_bangkok: flightData.numberBangkok !== '' ? parseInt(flightData.numberBangkok) : 0
     })
     .eq('access_code', savedPin);
 
