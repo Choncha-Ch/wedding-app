@@ -214,6 +214,9 @@ const RSVP = () => {
                 onBlur={() => autoSaveFlight()}
                 className="flex-1 px-3 py-2.5 bg-background border border-border rounded-md text-sm" 
               />
+              </div>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Flight date and Arrival time</p>
+              <div className="flex gap-2">
               <input 
                 type="time" 
                 value={flightForm.time} 
@@ -356,7 +359,8 @@ const RSVP = () => {
               <p className="text-[10px] text-muted-foreground leading-relaxed">
                 Please INCLUDE YOURSELF and PLUS ONES.<br />
                 However, <strong>do not include guests who are directly invited and have their own app access to register themselves.</strong><br />
-                Only additionally count your extra plus-ones.
+                Only additionally count your extra plus-ones.<br /><br />
+                
               </p>
             </div>
           </div>
