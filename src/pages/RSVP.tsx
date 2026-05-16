@@ -112,7 +112,7 @@ const RSVP = () => {
         <Heart className="w-8 h-8 text-gold mx-auto mb-4" />
         <h1 className="font-serif text-3xl text-foreground mb-2">RSVP</h1>
         <p className="text-[8px] uppercase tracking-[0.2em] text-muted-foreground font-sans">
-          ★ Please submit before 30 April 2026 ★
+          ★ Please submit before 31 May 2026 ★
         </p>
         
         {isSaving && (
