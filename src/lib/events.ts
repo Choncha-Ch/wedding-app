@@ -83,8 +83,8 @@ export const events: WeddingEvent[] = [
     location: 'Private Cruise',
     description: 'Embark with us on a Private Cruise through the breathtaking wonders of the Andaman Sea. We will spend the day exploring the hidden emerald waters of the famous Hong Lagoon before heading to Phang Nga Bay. As the day draws to a close, we\'ll toast to the sunset from the deck, surrounded by the towering limestone karsts that make this region world-famous.',
     dressCode: 'Swimwear / Casual',
-    priceTHB: '3,500',
-    priceEUR: '97',
+    priceTHB: '3,500 - 4,500',
+    priceEUR: '95 - 120',
     mapLink: 'https://maps.google.com/?q=Phang+Nga+Bay+Phuket',
     highlightLines: [
         "Discover emerald waters and ancient caves in a UNESCO site of Phang Nga Bay",
